@@ -1725,8 +1725,9 @@ _objc_rootAllocWithZone(Class cls, malloc_zone_t *zone)
 }
 
 
-// Call [cls alloc] or [cls allocWithZone:nil], with appropriate 
-// shortcutting optimizations.
+/// Call [cls alloc] or [cls allocWithZone:nil], with appropriate shortcutting optimizations.
+/// 使用适当的捷径优化调用[cls alloc]或[cls allocWithZone:nil]。
+
 static ALWAYS_INLINE id
 callAlloc(Class cls, bool checkNil, bool allocWithZone=false)
 {

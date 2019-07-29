@@ -6510,7 +6510,8 @@ _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone,
 
     assert(cls->isRealized());
 
-    // Read class's info bits all at once for performance
+    /// Read class's info bits all at once for performance
+    ///一次读取所有类的信息位以提高性能
     bool hasCxxCtor = cls->hasCxxCtor();
     bool hasCxxDtor = cls->hasCxxDtor();
     bool fast = cls->canAllocNonpointer();

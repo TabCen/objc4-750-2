@@ -825,6 +825,8 @@ class protocol_array_t :
 
 struct class_rw_t {
     // Be warned that Symbolication knows the layout of this structure.
+    
+    ///    typedef unsigned int uint32_t;
     uint32_t flags;
     uint32_t version;
 
@@ -838,7 +840,7 @@ struct class_rw_t {
     Class nextSiblingClass;
 
     char *demangledName;
-
+    
 #if SUPPORT_INDEXED_ISA
     uint32_t index;
 #endif
@@ -870,6 +872,8 @@ struct class_rw_t {
 struct class_data_bits_t {
 
     // Values are the FAST_ flags above.
+    ///在64位的机器上，intptr_t和uintptr_t分别是long int、unsigned long int的别名；
+    ///在32位的机器上，intptr_t和uintptr_t分别是int、unsigned int的别名。
     uintptr_t bits;
 private:
     bool getBit(uintptr_t bit)
@@ -920,6 +924,12 @@ private:
 public:
 
     class_rw_t* data() {
+        /// & 运算 就是
+        /*
+         1&1 = 1
+         1&0 = 0
+         0&0 = 0
+         */
         return (class_rw_t *)(bits & FAST_DATA_MASK);
     }
     void setData(class_rw_t *newData)
@@ -1111,7 +1121,7 @@ public:
 struct objc_class : objc_object {
     // Class ISA;
     Class superclass;
-    cache_t cache;             // formerly cache pointer and vtable
+    cache_t cache;             // formerly cache pointer and vtable ->以前是缓存指针和vtable
     class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags
 
     class_rw_t *data() { 
